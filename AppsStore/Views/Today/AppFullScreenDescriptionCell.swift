@@ -9,6 +9,8 @@ import UIKit
 
 class AppFullScreenDescriptionCell: UITableViewCell {
     
+    // MARK: - Properties
+    
     let descriptionLabel: UILabel = {
         let label = UILabel()
         
@@ -42,6 +44,8 @@ class AppFullScreenDescriptionCell: UITableViewCell {
         
         return label
     }()
+    
+    // MARK: - Lifecycle
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

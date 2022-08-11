@@ -9,6 +9,8 @@ import UIKit
 
 class BaseTodayCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     var todayItem: TodayItem!
     
     override var isHighlighted: Bool {
@@ -24,6 +26,8 @@ class BaseTodayCell: UICollectionViewCell {
             }
         }
     }
+    
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

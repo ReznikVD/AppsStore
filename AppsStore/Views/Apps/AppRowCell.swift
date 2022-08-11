@@ -9,10 +9,14 @@ import UIKit
 
 class AppRowCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     let imageView: UIImageView = UIImageView(cornerRadius: 8)
     let nameLabel = UILabel(text: "App Name", font: .systemFont(ofSize: 20))
     let companyLabel = UILabel(text: "Company Name", font: .systemFont(ofSize: 13))
     let getButton = UIButton(title: "GET")
+    
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

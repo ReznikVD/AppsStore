@@ -7,7 +7,9 @@
 
 import UIKit
 
-class BackEnabledNavigationController: UINavigationController, UIGestureRecognizerDelegate {
+class BackEnabledNavigationController: UINavigationController {
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +22,11 @@ class BackEnabledNavigationController: UINavigationController, UIGestureRecogniz
         
         self.interactivePopGestureRecognizer?.delegate = self
     }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension BackEnabledNavigationController: UIGestureRecognizerDelegate {
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return self.viewControllers.count > 1

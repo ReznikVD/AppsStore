@@ -9,8 +9,12 @@ import UIKit
 
 class PreviewCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     let previewLabel = UILabel(text: "Preview", font: .boldSystemFont(ofSize: 20))
     let horizontalController = PreviewScreenshotsController()
+    
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

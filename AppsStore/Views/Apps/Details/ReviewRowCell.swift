@@ -9,7 +9,11 @@ import UIKit
 
 class ReviewRowCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     let reviewslController = ReviewsController()
+    
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

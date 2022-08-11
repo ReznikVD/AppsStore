@@ -7,10 +7,9 @@
 
 import UIKit
 
-class AppsPageController: BaseListController, UICollectionViewDelegateFlowLayout {
+class AppsPageController: BaseListController {
     
-    let cellId = "id"
-    let headerId = "headerId"
+    // MARK: - Subviews
     
     let activityIndicatorView: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .large)
@@ -19,6 +18,15 @@ class AppsPageController: BaseListController, UICollectionViewDelegateFlowLayout
         aiv.hidesWhenStopped = true
         return aiv
     }()
+    
+    // MARK: - Properties
+    
+    let cellId = "id"
+    let headerId = "headerId"
+    var groups = [AppGroup]()
+    var socialApps = [SocialApp]()
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +39,8 @@ class AppsPageController: BaseListController, UICollectionViewDelegateFlowLayout
         fetchData()
     }
     
-    var groups = [AppGroup]()
-    var socialApps = [SocialApp]()
-    
+    // MARK: - Methods
+
     fileprivate func fetchData() {
         
         var group1: AppGroup?
@@ -80,19 +87,6 @@ class AppsPageController: BaseListController, UICollectionViewDelegateFlowLayout
         }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as? AppsPageHeader else {
-            return UICollectionReusableView()
-        }
-        header.appHeaderHorizontalController.socialApps = self.socialApps
-        header.appHeaderHorizontalController.collectionView.reloadData()
-        return header
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: 300)
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groups.count
     }
@@ -113,6 +107,24 @@ class AppsPageController: BaseListController, UICollectionViewDelegateFlowLayout
             self?.navigationController?.pushViewController(controller, animated: true)
         }
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as? AppsPageHeader else {
+            return UICollectionReusableView()
+        }
+        header.appHeaderHorizontalController.socialApps = self.socialApps
+        header.appHeaderHorizontalController.collectionView.reloadData()
+        return header
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension AppsPageController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .init(width: view.frame.width, height: 300)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

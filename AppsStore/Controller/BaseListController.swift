@@ -8,6 +8,9 @@
 import UIKit
 
 class BaseListController: UICollectionViewController {
+    
+    // MARK: - Lifecycle
+    
     init() {
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }

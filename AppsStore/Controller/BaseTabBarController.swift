@@ -9,19 +9,23 @@ import UIKit
 
 class BaseTabBarController: UITabBarController {
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         viewControllers = [
-            createNavController(viewController: MusicContoller(), title: "Music", imageName: "music.note"),
             createNavController(viewController: TodayController(), title: "Today", imageName: "burst.fill"),
             createNavController(viewController: AppsPageController(), title: "Apps", imageName: "apps.iphone"),
-            createNavController(viewController: AppsSearchController(), title: "Search", imageName: "magnifyingglass")
+            createNavController(viewController: AppsSearchController(), title: "Search", imageName: "magnifyingglass"),
+            createNavController(viewController: MusicContoller(), title: "Music", imageName: "music.note"),
         ]
         
         self.tabBar.standardAppearance = setTabBarAppearance(color: .init(white: 0.96, alpha: 1))
         self.tabBar.scrollEdgeAppearance = setTabBarAppearance(color: .init(white: 0.96, alpha: 1))
     }
+    
+    // MARK: - Methods
     
     fileprivate func createNavController(viewController: UIViewController, title: String, imageName: String) -> UIViewController {
         viewController.tabBarController?.tabBar.standardAppearance = setTabBarAppearance(color: .green)

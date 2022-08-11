@@ -9,9 +9,13 @@ import UIKit
 
 class TrackCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     let imageView = UIImageView(cornerRadius: 16)
     let nameLabel = UILabel(text: "Track Name", font: .boldSystemFont(ofSize: 18))
     let subtitleLabel = UILabel(text: "Subtitle Label", font: .systemFont(ofSize: 16), numberOfLines: 2)
+    
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

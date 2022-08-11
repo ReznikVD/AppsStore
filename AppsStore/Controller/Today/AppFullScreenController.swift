@@ -7,7 +7,19 @@
 
 import UIKit
 
-class AppFullScreenController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AppFullScreenController: UIViewController {
+    
+    // MARK: - Subviews
+    
+    let tableView = UITableView(frame: .zero, style: .plain)
+    let floatingContainerView = UIView()
+    let closeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "close_button"), for: . normal)
+        return button
+    }()
+    
+    // MARK: - Properties
     
     var dismissHandler: (() -> ())?
     var todayItem: TodayItem?
@@ -20,21 +32,7 @@ class AppFullScreenController: UIViewController, UITableViewDelegate, UITableVie
             .filter({ $0.isKeyWindow }).first?
             .windowScene?.statusBarManager?.statusBarFrame.height ?? 0
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y < 0 {
-            scrollView.isScrollEnabled = false
-            scrollView.isScrollEnabled = true
-        }
-    
-        let translationY = -90 - self.statusBarHeight
-        let transform  = scrollView.contentOffset.y > 100 ? CGAffineTransform(translationX: 0, y: translationY) : .identity
-        
-        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
-            self.floatingContainerView.transform = transform
-        }
-    }
-    
-    let tableView = UITableView(frame: .zero, style: .plain)
+    // MARK: - Lifecylce
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,12 +56,18 @@ class AppFullScreenController: UIViewController, UITableViewDelegate, UITableVie
         setupFloatingControls()
     }
     
-    let floatingContainerView = UIView()
+    // MARK: - Methods
     
-    @objc fileprivate func handleTap() {
-        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
-            self.floatingContainerView.transform = .init(translationX: 0, y: -90)
-        }
+    fileprivate func setupCloseButton() {
+        view.addSubview(closeButton)
+        
+        closeButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 12, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
+        closeButton.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+    }
+    
+    @objc fileprivate func handleDismiss(sender: UIButton) {
+        sender.isHidden = true
+        dismissHandler?()
     }
     
     fileprivate func setupFloatingControls() {
@@ -71,14 +75,6 @@ class AppFullScreenController: UIViewController, UITableViewDelegate, UITableVie
         floatingContainerView.layer.cornerRadius = 16
         floatingContainerView.clipsToBounds = true
         view.addSubview(floatingContainerView)
-        
-//        let statusBarHeight = UIApplication.shared.connectedScenes
-//                .filter {$0.activationState == .foregroundActive }
-//                .map {$0 as? UIWindowScene }
-//                .compactMap { $0 }
-//                .first?.windows
-//                .filter({ $0.isKeyWindow }).first?
-//                .windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         
         floatingContainerView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: -90, right: 16), size: .init(width: 0, height: 90))
         
@@ -118,25 +114,49 @@ class AppFullScreenController: UIViewController, UITableViewDelegate, UITableVie
         stackView.alignment = .center
     }
     
-    let closeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "close_button"), for: . normal)
-        return button
-    }()
-    
-    fileprivate func setupCloseButton() {
-        view.addSubview(closeButton)
-        
-        closeButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 12, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
-        closeButton.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+    @objc fileprivate func handleTap() {
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+            self.floatingContainerView.transform = .init(translationX: 0, y: -90)
+        }
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < 0 {
+            scrollView.isScrollEnabled = false
+            scrollView.isScrollEnabled = true
+        }
+    
+        let translationY = -90 - self.statusBarHeight
+        let transform  = scrollView.contentOffset.y > 100 ? CGAffineTransform(translationX: 0, y: translationY) : .identity
+        
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+            self.floatingContainerView.transform = transform
+        }
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension AppFullScreenController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return TodayController.cellSize
+        }
+        return UITableView.automaticDimension
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension AppFullScreenController: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         if indexPath.item == 0 {
             let headerCell = AppFullScreenHeaderCell()
             headerCell.todayCell.todayItem = todayItem
@@ -147,17 +167,5 @@ class AppFullScreenController: UIViewController, UITableViewDelegate, UITableVie
         }
         let cell = AppFullScreenDescriptionCell()
         return cell
-    }
-    
-    @objc fileprivate func handleDismiss(sender: UIButton) {
-        sender.isHidden = true
-        dismissHandler?()
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return TodayController.cellSize
-        }
-        return UITableView.automaticDimension
     }
 }

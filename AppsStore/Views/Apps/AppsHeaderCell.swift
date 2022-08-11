@@ -9,9 +9,13 @@ import UIKit
 
 class AppsHeaderCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     let companyLabel = UILabel(text: "Facebook", font: .boldSystemFont(ofSize: 12))
     let titleLabel = UILabel(text: "Keeping up with friends is faster than ever", font: .systemFont(ofSize: 24))
     let imageView = UIImageView(cornerRadius: 8)
+    
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

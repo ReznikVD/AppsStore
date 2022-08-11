@@ -9,9 +9,8 @@ import UIKit
 
 class ReviewCell: UICollectionViewCell {
     
-    let titleLabel = UILabel(text: "Review Title", font: .boldSystemFont(ofSize: 18))
-    let auhorLabel = UILabel(text: "Author", font: .systemFont(ofSize: 16))
-    let starsLabel = UILabel(text: "Stars", font: .systemFont(ofSize: 14))
+    // MARK: - Subviews
+    
     let starsStackView: UIStackView = {
         var arrangeSubviews = [UIView]()
         (0..<5).forEach { _ in
@@ -25,7 +24,14 @@ class ReviewCell: UICollectionViewCell {
         return stack
     }()
     
+    // MARK: - Properties
+    
+    let titleLabel = UILabel(text: "Review Title", font: .boldSystemFont(ofSize: 18))
+    let auhorLabel = UILabel(text: "Author", font: .systemFont(ofSize: 16))
+    let starsLabel = UILabel(text: "Stars", font: .systemFont(ofSize: 14))
     let bodyLabel = UILabel(text: "Review body", font: .systemFont(ofSize: 18), numberOfLines: 5)
+    
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

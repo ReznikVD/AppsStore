@@ -7,11 +7,14 @@
 
 import UIKit
 
-class AppsHeaderHorizontalController: HorizontalSnappingController, UICollectionViewDelegateFlowLayout {
+class AppsHeaderHorizontalController: HorizontalSnappingController {
+    
+    // MARK: - Properties
     
     let cellId = "cellId"
-    
     var socialApps = [SocialApp]()
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,12 +24,10 @@ class AppsHeaderHorizontalController: HorizontalSnappingController, UICollection
         collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
     }
     
+    // MARK: - Methods
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return socialApps.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width - 48, height: view.frame.height)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -40,5 +41,14 @@ class AppsHeaderHorizontalController: HorizontalSnappingController, UICollection
         cell.titleLabel.text = socialApp.tagline
         cell.imageView.sd_setImage(with: URL(string: socialApp.imageUrl))
         return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension AppsHeaderHorizontalController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return .init(width: view.frame.width - 48, height: view.frame.height)
     }
 }

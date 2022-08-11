@@ -9,6 +9,16 @@ import UIKit
 
 class MultipleAppCell: UICollectionViewCell {
     
+    // MARK: - Subviews
+    
+    let separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.3, alpha: 0.3)
+        return view
+    }()
+    
+    // MARK: - Properties
+    
     var app: FeedResult! {
         didSet {
             nameLabel.text = app.name
@@ -22,11 +32,7 @@ class MultipleAppCell: UICollectionViewCell {
     let companyLabel = UILabel(text: "Company Name", font: .systemFont(ofSize: 13))
     let getButton = UIButton(title: "GET")
     
-    let separatorView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(white: 0.3, alpha: 0.3)
-        return view
-    }()
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -9,6 +9,8 @@ import UIKit
 
 class MusicLoadingFooter: UICollectionReusableView {
     
+    // MARK: - Lifecycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         

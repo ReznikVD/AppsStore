@@ -9,9 +9,12 @@ import UIKit
 
 class AppsGroupCell: UICollectionViewCell {
     
-    let titleLabel = UILabel(text: "App Section", font: .boldSystemFont(ofSize: 30))
+    // MARK: - Properties
     
+    let titleLabel = UILabel(text: "App Section", font: .boldSystemFont(ofSize: 30))
     let horizontalController = AppsHorizontalController()
+    
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

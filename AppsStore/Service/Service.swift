@@ -9,9 +9,15 @@ import Foundation
 
 class Service {
     
+    // MARK: - Properties
+    
     static let shared = Service()
     
+    // MARK: - Lifecycle
+    
     private init() {}
+    
+    // MARK: - Methods
     
     func fetchApps(searchTerm: String, completion: @escaping (SearchResult?, Error?) -> ()) {
         let urlString =  "https://itunes.apple.com/search?term=\(searchTerm)&entity=software"

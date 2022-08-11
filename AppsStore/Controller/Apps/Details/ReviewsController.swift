@@ -7,7 +7,9 @@
 
 import UIKit
 
-class ReviewsController: HorizontalSnappingController, UICollectionViewDelegateFlowLayout {
+class ReviewsController: HorizontalSnappingController {
+    
+    // MARK: - Properties
     
     let cellId = "cellId"
     
@@ -17,6 +19,8 @@ class ReviewsController: HorizontalSnappingController, UICollectionViewDelegateF
         }
     }
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,6 +29,8 @@ class ReviewsController: HorizontalSnappingController, UICollectionViewDelegateF
         collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
     }
     
+    // MARK: - Methods
+
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return reviews?.feed.entry.count ?? 0
     }
@@ -45,6 +51,11 @@ class ReviewsController: HorizontalSnappingController, UICollectionViewDelegateF
         }
         return cell
     }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension ReviewsController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width - 48, height: view.frame.height)

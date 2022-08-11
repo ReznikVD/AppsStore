@@ -9,23 +9,7 @@ import UIKit
 
 class SearchResultCell: UICollectionViewCell {
     
-    var appResult: Result! {
-        didSet {
-            nameLabel.text = appResult.trackName
-            categoryLabel.text = appResult.primaryGenreName
-            ratingsLabel.text = "Rating: \(appResult.averageUserRating ?? 0)"
-            
-            let url = URL(string: appResult.artworkUrl100)
-            appIconImageView.sd_setImage(with: url)
-            screenshot1ImageView.sd_setImage(with: URL(string: appResult.screenshotUrls[0]))
-            if appResult.screenshotUrls.count > 1 {
-                screenshot2ImageView.sd_setImage(with: URL(string: appResult.screenshotUrls[1]))
-            }
-            if appResult.screenshotUrls.count > 2 {
-                screenshot3ImageView.sd_setImage(with: URL(string: appResult.screenshotUrls[2]))
-            }
-        }
-    }
+    // MARK: - Subviews
     
     let appIconImageView: UIImageView = {
         let iv = UIImageView()
@@ -71,16 +55,27 @@ class SearchResultCell: UICollectionViewCell {
     lazy var screenshot2ImageView = self.createScreenshotImageView()
     lazy var screenshot3ImageView = self.createScreenshotImageView()
     
-    func createScreenshotImageView() -> UIImageView {
-        let imgView = UIImageView()
-        imgView.backgroundColor = .white
-        imgView.layer.cornerRadius = 8
-        imgView.clipsToBounds = true
-        imgView.layer.borderWidth = 0.5
-        imgView.layer.borderColor = UIColor(white: 0.5, alpha: 0.5).cgColor
-        imgView.contentMode = .scaleAspectFill
-        return imgView
+    // MARK: - Properties
+    
+    var appResult: Result! {
+        didSet {
+            nameLabel.text = appResult.trackName
+            categoryLabel.text = appResult.primaryGenreName
+            ratingsLabel.text = "Rating: \(appResult.averageUserRating ?? 0)"
+            
+            let url = URL(string: appResult.artworkUrl100)
+            appIconImageView.sd_setImage(with: url)
+            screenshot1ImageView.sd_setImage(with: URL(string: appResult.screenshotUrls[0]))
+            if appResult.screenshotUrls.count > 1 {
+                screenshot2ImageView.sd_setImage(with: URL(string: appResult.screenshotUrls[1]))
+            }
+            if appResult.screenshotUrls.count > 2 {
+                screenshot3ImageView.sd_setImage(with: URL(string: appResult.screenshotUrls[2]))
+            }
+        }
     }
+    
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -120,4 +115,18 @@ class SearchResultCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Methods
+    
+    func createScreenshotImageView() -> UIImageView {
+        let imgView = UIImageView()
+        imgView.backgroundColor = .white
+        imgView.layer.cornerRadius = 8
+        imgView.clipsToBounds = true
+        imgView.layer.borderWidth = 0.5
+        imgView.layer.borderColor = UIColor(white: 0.5, alpha: 0.5).cgColor
+        imgView.contentMode = .scaleAspectFill
+        return imgView
+    }
+    
+   
 }

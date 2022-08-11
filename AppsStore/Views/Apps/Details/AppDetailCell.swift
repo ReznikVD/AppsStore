@@ -9,6 +9,8 @@ import UIKit
 
 class AppDetailCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     var app: Result! {
         didSet {
             nameLabel.text = app?.trackName
@@ -23,6 +25,8 @@ class AppDetailCell: UICollectionViewCell {
     let priceButton = UIButton(title: "$4.99")
     let whatsNewLabel = UILabel(text: "Whats new", font: .boldSystemFont(ofSize: 20))
     let releaseNotesLabel = UILabel(text: "Release Notes", font: .systemFont(ofSize: 16), numberOfLines: 0)
+    
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

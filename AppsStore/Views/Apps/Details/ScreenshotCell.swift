@@ -9,7 +9,11 @@ import UIKit
 
 class ScreenshotCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     let imageView = UIImageView(cornerRadius: 12)
+    
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

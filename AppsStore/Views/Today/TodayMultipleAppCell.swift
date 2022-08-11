@@ -9,6 +9,8 @@ import UIKit
 
 class TodayMultipleAppCell: BaseTodayCell {
     
+    // MARK: - Properties
+    
     override var todayItem: TodayItem! {
         didSet {
             categoryLabel.text = todayItem.category
@@ -23,6 +25,8 @@ class TodayMultipleAppCell: BaseTodayCell {
     let titleLabel = UILabel(text: "Utilizing your time", font: .boldSystemFont(ofSize: 32), numberOfLines: 2)
     
     let multipleAppsContoller = TodayMultipleAppsController(mode: .small)
+    
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

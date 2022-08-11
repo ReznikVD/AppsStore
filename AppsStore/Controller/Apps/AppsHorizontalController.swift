@@ -7,18 +7,17 @@
 
 import UIKit
 
-class AppsHorizontalController: HorizontalSnappingController, UICollectionViewDelegateFlowLayout {
+class AppsHorizontalController: HorizontalSnappingController {
+    
+    // MARK: - Properties
     
     let cellId = "cellId"
-    
     var appGroup: AppGroup?
-    
     var didSelectHandler: ((FeedResult) -> ())?
+    let topBottomPadding: CGFloat = 12
+    let lineSpacing: CGFloat = 10
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let app = appGroup?.feed.results[indexPath.item] else { return }
-        didSelectHandler?(app)
-    }
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +26,8 @@ class AppsHorizontalController: HorizontalSnappingController, UICollectionViewDe
         collectionView.register(AppRowCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
     }
+    
+    // MARK: - Methods
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return appGroup?.feed.results.count ?? 0
@@ -43,8 +44,15 @@ class AppsHorizontalController: HorizontalSnappingController, UICollectionViewDe
         return cell
     }
     
-    let topBottomPadding: CGFloat = 12
-    let lineSpacing: CGFloat = 10
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let app = appGroup?.feed.results[indexPath.item] else { return }
+        didSelectHandler?(app)
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension AppsHorizontalController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = (view.frame.height - 2 * topBottomPadding - 2 * lineSpacing) / 3

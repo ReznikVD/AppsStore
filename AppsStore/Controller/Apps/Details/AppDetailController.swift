@@ -7,11 +7,21 @@
 
 import UIKit
 
-class AppDetailController: BaseListController, UICollectionViewDelegateFlowLayout {
+class AppDetailController: BaseListController {
+    
+    // MARK: - Properties
     
     fileprivate let appId: String
     
-    // dependency injection constructor
+    var app: Result?
+    var reviews: Reviews?
+    
+    let detailCellId = "detailCellId"
+    let previewCellId = "previewCellId"
+    let reviewCellId = "reviewCellId"
+    
+    // MARK: - Lifecycle
+    
     init(appId: String) {
         self.appId = appId
         super.init()
@@ -20,14 +30,6 @@ class AppDetailController: BaseListController, UICollectionViewDelegateFlowLayou
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    var app: Result?
-    var reviews: Reviews?
-    
-    let detailCellId = "detailCellId"
-    let previewCellId = "previewCellId"
-    let reviewCellId = "reviewCellId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,9 +43,7 @@ class AppDetailController: BaseListController, UICollectionViewDelegateFlowLayou
         fetchData()
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
-    }
+    // MARK: - Methods
     
     fileprivate func fetchData() {
         let urlString = "https://itunes.apple.com/lookup?id=\(appId)"
@@ -69,6 +69,10 @@ class AppDetailController: BaseListController, UICollectionViewDelegateFlowLayou
             }
         }
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0 {
@@ -91,6 +95,11 @@ class AppDetailController: BaseListController, UICollectionViewDelegateFlowLayou
             return cell
         }
     }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension AppDetailController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
